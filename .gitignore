@@ -1,0 +1,35 @@
+
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.sdf
+*.opensdf
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.dll
+*.bak
+*.cache
+*.ilk
+*.vcxproj
+*.vcxproj.filters
+*.log
+[Bb]in
+[Dd]ebug*/
+[Ii]pch*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
