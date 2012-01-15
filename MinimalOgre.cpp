@@ -114,8 +114,9 @@ bool MinimalOgre::go(void)
     // Position camera
     mCamera->setPosition(Ogre::Vector3(0,50,0));
     // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,1,0));
+    mCamera->lookAt(Ogre::Vector3(0,.6,-1));
     mCamera->setNearClipDistance(5);
+	mCamera->setFarClipDistance(INFINITE);
  
 
 	//THIS WILL NOT BE NEEDED. Creating a custom camera
@@ -144,14 +145,8 @@ bool MinimalOgre::go(void)
 //-------------------------------------------------------------------------------------
 
 
-#if(GUI_ON)
-	GUI.Init(mSceneMgr, SceneManager);
-
-	//load GUI SHEETS/Widgets
-	GUI.InitWidgets();
-#endif
-
 	// load our stuff here
+	Lighting.Init(mSceneMgr);
 	Player1.LoadPlayer(mSceneMgr);
 	Terrain.Load_plane(mSceneMgr);
 
@@ -184,12 +179,12 @@ bool MinimalOgre::go(void)
 	//Load geometry!
 
 
-#if(!GUI_ON)
+
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, this);
     mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     mTrayMgr->hideCursor();
- 
+ /*
     // create a params panel for displaying sample details
     Ogre::StringVector items;
     items.push_back("cam.pX");
@@ -207,8 +202,10 @@ bool MinimalOgre::go(void)
     mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
     mDetailsPanel->setParamValue(9, "Bilinear");
     mDetailsPanel->setParamValue(10, "Solid");
-    mDetailsPanel->hide();
-#endif 
+ //   mDetailsPanel->hide();
+ 
+ */
+
     mRoot->addFrameListener(this);
 //-------------------------------------------------------------------------------------
     mRoot->startRendering();
@@ -240,18 +237,21 @@ bool MinimalOgre::frameRenderingQueued(const Ogre::FrameEvent& evt)//Business fu
 	//Move things
 	Player1.Move(mTrayMgr);
 
+	//Animate
+	Player1.Animation(mSceneMgr, evt);
+
 	//Update Camera
 	GameCamera.Update(mSceneMgr, mCamera, 0);
 
-	//Rayscene Queries
-	//GUI.RaySceneQuery(mCamera);
+	//GUI
+	GUI.Debug(mTrayMgr, mSceneMgr);
 
     mTrayMgr->frameRenderingQueued(evt);
  
     if (!mTrayMgr->isDialogVisible())
     {
         mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
-        if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
+/*       if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
         {
             mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(mCamera->getDerivedPosition().x));
             mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mCamera->getDerivedPosition().y));
@@ -261,7 +261,8 @@ bool MinimalOgre::frameRenderingQueued(const Ogre::FrameEvent& evt)//Business fu
             mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().y));
             mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().z));
         }
-    }
+ */
+	}
 
 
     return true;

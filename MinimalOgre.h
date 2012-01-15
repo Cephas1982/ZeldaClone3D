@@ -89,7 +89,8 @@ protected:
 	C_Camera GameCamera;
 	C_BaseEntity Player1;
 	C_Terrain Terrain;
-	
+	C_Lighting Lighting;
+	C_GUI GUI;
 
 };
  

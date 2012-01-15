@@ -19,7 +19,7 @@ void C_Terrain::Load_plane(Ogre::SceneManager* sceneMgr)
 
 	Ogre::MeshManager::getSingleton().createPlane("ground",
 												Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-												plane, 1500, 1500, 20, 20, true, 1, 5, 5,
+												plane, PLANE_WIDTH, PLANE_HEIGHT, 20, 20, true, 1, 10, 10,
 												Ogre::Vector3::UNIT_Z);
 
 	Ogre::Entity* entGround = sceneMgr->createEntity("GroundEntity", "ground");

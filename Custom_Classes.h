@@ -11,5 +11,8 @@
 
 #include "Terrain.h"
 
+#include "Lighting.h"
+
+#include "GUI.h"
 
 #endif
